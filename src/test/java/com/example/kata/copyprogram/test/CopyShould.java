@@ -36,14 +36,14 @@ public class CopyShould {
     @Test
     public void forward_messages_from_input_to_output() {
 
-        context.checking(CopyExpectations_aNew("a", "b"));
+        context.checking(setUpReturning("a", "b"));
 
         sut.copy();
 
         context.assertIsSatisfied();
     }
 
-    private Expectations CopyExpectations_aNew(String... returnValues) {
+    private Expectations setUpReturning(String... returnValues) {
         return CopyExpectations.aNew()
                 .readingFrom(keyboardReader)
                 .returning(returnValues)
