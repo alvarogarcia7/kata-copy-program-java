@@ -41,17 +41,7 @@ public class CopyTest {
 
     @Test
     public void outputs_the_only_message() {
-        context.checking(new Expectations() {{
-            exactly(2).of(keyboardReader).hasNext(); will(onConsecutiveCalls(
-                    returnValue(true),
-                    returnValue(false)
-            ));
-            oneOf(keyboardReader).get(); will(onConsecutiveCalls(
-                    returnValue("a")
-            ));
-
-            oneOf(writer).print("a");
-        }});
+        context.checking(setUpReturning("a"));
 
         sut.copy();
 
