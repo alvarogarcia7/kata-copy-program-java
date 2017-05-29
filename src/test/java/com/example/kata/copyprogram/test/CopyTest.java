@@ -28,7 +28,7 @@ public class CopyTest {
     @Test
     public void does_not_output_when_there_is_nothing_on_input() {
         context.checking(new Expectations() {{
-            oneOf(keyboardReader).hasNext(); will(returnEnumeration(false));
+            oneOf(keyboardReader).hasNext(); will(onConsecutiveCalls(returnValue(false)));
         }});
 
         sut.copy();

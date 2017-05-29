@@ -1,10 +1,13 @@
 package com.example.kata.copyprogram;
 
 public class Copier {
-    public Copier(ReadKeyboard keyboardReader, WritePrinter writePrinter) {
+    private final ReadKeyboard keyboardReader;
 
+    public Copier(ReadKeyboard keyboardReader, WritePrinter writePrinter) {
+        this.keyboardReader = keyboardReader;
     }
 
     public void copy() {
+        keyboardReader.hasNext();
     }
 }
