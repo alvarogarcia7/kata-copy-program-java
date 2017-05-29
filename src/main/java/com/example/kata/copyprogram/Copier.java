@@ -10,9 +10,8 @@ public class Copier {
     }
 
     public void copy() {
-        if(keyboardReader.hasNext()){
+        while (keyboardReader.hasNext()){
             writePrinter.print(keyboardReader.get());
-            keyboardReader.hasNext();
         }
     }
 }

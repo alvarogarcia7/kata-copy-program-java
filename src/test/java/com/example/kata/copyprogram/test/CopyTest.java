@@ -60,12 +60,12 @@ public class CopyTest {
     @Test
     public void outputs_all_messages() {
         context.checking(new Expectations() {{
-            exactly(2).of(keyboardReader).hasNext(); will(onConsecutiveCalls(
+            exactly(3).of(keyboardReader).hasNext(); will(onConsecutiveCalls(
                     returnValue(true),
                     returnValue(true),
                     returnValue(false)
             ));
-            oneOf(keyboardReader).get(); will(onConsecutiveCalls(
+            exactly(2).of(keyboardReader).get(); will(onConsecutiveCalls(
                     returnValue("a"),
                     returnValue("b")
             ));
