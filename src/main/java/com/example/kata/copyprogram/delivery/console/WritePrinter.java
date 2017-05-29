@@ -1,4 +1,6 @@
-package com.example.kata.copyprogram;
+package com.example.kata.copyprogram.delivery.console;
+
+import com.example.kata.copyprogram.Writer;
 
 import java.io.PrintStream;
 
