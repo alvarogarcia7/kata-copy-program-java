@@ -57,4 +57,25 @@ public class CopyTest {
 
         context.assertIsSatisfied();
     }
+    @Test
+    public void outputs_all_messages() {
+        context.checking(new Expectations() {{
+            exactly(2).of(keyboardReader).hasNext(); will(onConsecutiveCalls(
+                    returnValue(true),
+                    returnValue(true),
+                    returnValue(false)
+            ));
+            oneOf(keyboardReader).get(); will(onConsecutiveCalls(
+                    returnValue("a"),
+                    returnValue("b")
+            ));
+
+            oneOf(writer).print("a");
+            oneOf(writer).print("b");
+        }});
+
+        sut.copy();
+
+        context.assertIsSatisfied();
+    }
 }
