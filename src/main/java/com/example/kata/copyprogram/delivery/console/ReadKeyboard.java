@@ -1,4 +1,6 @@
-package com.example.kata.copyprogram;
+package com.example.kata.copyprogram.delivery.console;
+
+import com.example.kata.copyprogram.Reader;
 
 import java.io.InputStream;
 import java.util.Scanner;
