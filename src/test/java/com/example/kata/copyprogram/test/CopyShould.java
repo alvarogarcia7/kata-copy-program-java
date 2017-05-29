@@ -29,22 +29,29 @@ public class CopyShould {
 
     @Test
     public void forward_messages_from_input_to_output() {
+        String a = "a";
+        String b = "b";
 
-        context.checking(new Expectations() {{
-            exactly(3).of(keyboardReader).hasNext(); will(onConsecutiveCalls
-                    (returnValue(true),
-                    returnValue(true),
-                    returnValue(false)));
-            exactly(2).of(keyboardReader).get(); will(onConsecutiveCalls(
-                    returnValue("a"),
-                    returnValue("b")));
-
-            oneOf(writePrinter).print("a");
-            oneOf(writePrinter).print("b");
-        }});
+        context.checking(CopyExpectations_aNew(a, b));
 
         sut.copy();
 
         context.assertIsSatisfied();
+    }
+
+    private Expectations CopyExpectations_aNew(String a, String b) {
+        return new Expectations() {{
+            exactly(3).of(keyboardReader).hasNext(); will(onConsecutiveCalls
+                    (returnValue(true),
+                    returnValue(true),
+                    returnValue(false)));
+            exactly(2).of(keyboardReader).get();
+            will(onConsecutiveCalls(
+                    returnValue(a),
+                    returnValue(b)));
+
+            oneOf(writePrinter).print(a);
+            oneOf(writePrinter).print(b);
+        }};
     }
 }
