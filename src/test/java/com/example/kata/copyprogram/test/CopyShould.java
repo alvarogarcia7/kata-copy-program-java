@@ -29,10 +29,8 @@ public class CopyShould {
 
     @Test
     public void forward_messages_from_input_to_output() {
-        String a = "a";
-        String b = "b";
 
-        context.checking(CopyExpectations_aNew(a, b));
+        context.checking(CopyExpectations_aNew("a", "b"));
 
         sut.copy();
 
