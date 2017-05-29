@@ -40,13 +40,17 @@ class CopyExpectations {
             List<Action> collect1 = Arrays.stream(returnValues).map(x->returnValue(true)).collect(Collectors.toList());
             collect1.add(returnValue(false));
             exactly(returnValues.length+1).of(from).hasNext();
-            will(onConsecutiveCalls(collect1.toArray(new Action[0])));
+            will(onConsecutiveCalls(array(collect1)));
             exactly(returnValues.length).of(from).get();
-            Action[] collect = Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()).toArray(new Action[0]);
+            Action[] collect = array(Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()));
             will(onConsecutiveCalls(collect
             ));
 
             Arrays.stream(returnValues).forEach(message -> oneOf(to).print(message));
         }};
+    }
+
+    private Action[] array(List<Action> values) {
+        return values.toArray(new Action[0]);
     }
 }
