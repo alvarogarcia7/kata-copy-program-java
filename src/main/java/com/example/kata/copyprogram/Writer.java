@@ -1,5 +1,5 @@
 package com.example.kata.copyprogram;
 
-public interface WritePrinter {
+public interface Writer {
     void print(String message);
 }

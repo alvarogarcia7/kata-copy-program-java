@@ -1,6 +1,6 @@
 package com.example.kata.copyprogram;
 
-public interface ReadKeyboard {
+public interface Reader {
     boolean hasNext();
     String  get();
 }

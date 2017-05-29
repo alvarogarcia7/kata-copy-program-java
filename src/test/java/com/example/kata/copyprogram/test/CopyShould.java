@@ -1,8 +1,8 @@
 package com.example.kata.copyprogram.test;
 
 import com.example.kata.copyprogram.Copier;
-import com.example.kata.copyprogram.ReadKeyboard;
-import com.example.kata.copyprogram.WritePrinter;
+import com.example.kata.copyprogram.Reader;
+import com.example.kata.copyprogram.Writer;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -14,17 +14,17 @@ public class CopyShould {
 
     private Copier sut;
 
-    private ReadKeyboard keyboardReader;
-    private WritePrinter writePrinter;
+    private Reader input;
+    private Writer output;
 
     @Before
     public void setUp() {
         context = new Mockery();
 
-        keyboardReader = context.mock(ReadKeyboard.class);
-        writePrinter = context.mock(WritePrinter.class);
+        input = context.mock(Reader.class);
+        output = context.mock(Writer.class);
 
-        sut = new Copier(keyboardReader, writePrinter);
+        sut = new Copier(input, output);
     }
 
     @Test
@@ -39,9 +39,9 @@ public class CopyShould {
 
     private Expectations setUpReturning(String... returnValues) {
         return CopyExpectations.aNew()
-                .readingFrom(keyboardReader)
+                .readingFrom(input)
                 .returning(returnValues)
-                .writingTo(writePrinter)
+                .writingTo(output)
                 .build();
     }
 

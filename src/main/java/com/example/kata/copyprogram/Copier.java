@@ -1,17 +1,17 @@
 package com.example.kata.copyprogram;
 
 public class Copier {
-    private final ReadKeyboard keyboardReader;
-    private WritePrinter writePrinter;
+    private final Reader keyboardReader;
+    private Writer writer;
 
-    public Copier(ReadKeyboard keyboardReader, WritePrinter writePrinter) {
+    public Copier(Reader keyboardReader, Writer writer) {
         this.keyboardReader = keyboardReader;
-        this.writePrinter = writePrinter;
+        this.writer = writer;
     }
 
     public void copy() {
         while (keyboardReader.hasNext()){
-            writePrinter.print(keyboardReader.get());
+            writer.print(keyboardReader.get());
         }
     }
 }

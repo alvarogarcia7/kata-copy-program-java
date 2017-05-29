@@ -1,7 +1,7 @@
 package com.example.kata.copyprogram.test;
 
-import com.example.kata.copyprogram.ReadKeyboard;
-import com.example.kata.copyprogram.WritePrinter;
+import com.example.kata.copyprogram.Reader;
+import com.example.kata.copyprogram.Writer;
 import org.jmock.AbstractExpectations;
 import org.jmock.Expectations;
 import org.jmock.api.Action;
@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 
 class CopyExpectations {
     private String[] returnValues;
-    private WritePrinter to;
-    private ReadKeyboard from;
+    private Writer to;
+    private Reader from;
 
     static CopyExpectations aNew() {
         return new CopyExpectations();
     }
 
-    CopyExpectations readingFrom(ReadKeyboard keyboardReader) {
+    CopyExpectations readingFrom(Reader keyboardReader) {
         this.from = keyboardReader;
         return this;
     }
@@ -30,8 +30,8 @@ class CopyExpectations {
         return this;
     }
 
-    CopyExpectations writingTo(WritePrinter writePrinter) {
-        this.to = writePrinter;
+    CopyExpectations writingTo(Writer writer) {
+        this.to = writer;
         return this;
     }
 

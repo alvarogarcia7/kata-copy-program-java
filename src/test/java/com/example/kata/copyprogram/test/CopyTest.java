@@ -1,8 +1,8 @@
 package com.example.kata.copyprogram.test;
 
 import com.example.kata.copyprogram.Copier;
-import com.example.kata.copyprogram.ReadKeyboard;
-import com.example.kata.copyprogram.WritePrinter;
+import com.example.kata.copyprogram.Reader;
+import com.example.kata.copyprogram.Writer;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -10,27 +10,27 @@ import org.junit.Test;
 
 public class CopyTest {
 
-    private WritePrinter writer;
+    private Writer output;
     private Mockery context;
 
     private Copier sut;
 
-    private ReadKeyboard keyboardReader;
+    private Reader input;
 
     @Before
     public void setUp() {
         context = new Mockery();
 
-        keyboardReader = context.mock(ReadKeyboard.class);
-        writer= context.mock(WritePrinter.class);
+        input = context.mock(Reader.class);
+        output = context.mock(Writer.class);
 
-        sut = new Copier(keyboardReader, writer);
+        sut = new Copier(input, output);
     }
 
     @Test
     public void does_not_output_when_there_is_nothing_on_input() {
         context.checking(new Expectations() {{
-            oneOf(keyboardReader).hasNext(); will(onConsecutiveCalls(returnValue(false)));
+            oneOf(input).hasNext(); will(onConsecutiveCalls(returnValue(false)));
         }});
 
         sut.copy();
@@ -58,9 +58,9 @@ public class CopyTest {
 
     private Expectations setUpReturning(String... returnValues) {
         return CopyExpectations.aNew()
-                .readingFrom(keyboardReader)
+                .readingFrom(input)
                 .returning(returnValues)
-                .writingTo(writer)
+                .writingTo(output)
                 .build();
     }
 }
