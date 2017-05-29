@@ -3,10 +3,15 @@ package com.example.kata.copyprogram.test;
 import com.example.kata.copyprogram.Copier;
 import com.example.kata.copyprogram.ReadKeyboard;
 import com.example.kata.copyprogram.WritePrinter;
+import org.jmock.AbstractExpectations;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.jmock.api.Action;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class CopyShould {
 
@@ -37,19 +42,18 @@ public class CopyShould {
         context.assertIsSatisfied();
     }
 
-    private Expectations CopyExpectations_aNew(String a, String b) {
+    private Expectations CopyExpectations_aNew(String... returnValues) {
         return new Expectations() {{
-            exactly(3).of(keyboardReader).hasNext(); will(onConsecutiveCalls
+            exactly(returnValues.length+1).of(keyboardReader).hasNext(); will(onConsecutiveCalls
                     (returnValue(true),
                     returnValue(true),
                     returnValue(false)));
-            exactly(2).of(keyboardReader).get();
-            will(onConsecutiveCalls(
-                    returnValue(a),
-                    returnValue(b)));
+            exactly(returnValues.length).of(keyboardReader).get();
+            Action[] collect = Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()).toArray(new Action[0]);
+            will(onConsecutiveCalls(collect
+            ));
 
-            oneOf(writePrinter).print(a);
-            oneOf(writePrinter).print(b);
+            Arrays.stream(returnValues).forEach(message -> oneOf(writePrinter).print(message));
         }};
     }
 }
