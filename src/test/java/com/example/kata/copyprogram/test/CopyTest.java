@@ -24,7 +24,7 @@ public class CopyTest {
         keyboardReader = context.mock(ReadKeyboard.class);
         writer= context.mock(WritePrinter.class);
 
-        sut = new Copier(keyboardReader, null);
+        sut = new Copier(keyboardReader, writer);
     }
 
     @Test
