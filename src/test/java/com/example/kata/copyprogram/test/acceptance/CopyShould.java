@@ -1,17 +1,18 @@
-package com.example.kata.copyprogram.test;
+package com.example.kata.copyprogram.test.acceptance;
 
 import com.example.kata.copyprogram.Copier;
 import com.example.kata.copyprogram.Reader;
 import com.example.kata.copyprogram.Writer;
+import com.example.kata.copyprogram.test.CopyExpectations;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CopyTest {
+public class CopyShould {
 
     private Mockery context;
-        
+
     private Copier sut;
 
     private Reader input;
@@ -28,27 +29,8 @@ public class CopyTest {
     }
 
     @Test
-    public void does_not_output_when_there_is_nothing_on_input() {
-        context.checking(new Expectations() {{
-            oneOf(input).hasNext(); will(onConsecutiveCalls(returnValue(false)));
-        }});
+    public void forward_messages_from_input_to_output() {
 
-        sut.copy();
-
-        context.assertIsSatisfied();
-    }
-
-
-    @Test
-    public void outputs_the_only_message() {
-        context.checking(setUpReturning("a"));
-
-        sut.copy();
-
-        context.assertIsSatisfied();
-    }
-    @Test
-    public void outputs_all_messages() {
         context.checking(setUpReturning("a", "b"));
 
         sut.copy();
@@ -63,4 +45,5 @@ public class CopyTest {
                 .writingTo(output)
                 .build();
     }
+
 }

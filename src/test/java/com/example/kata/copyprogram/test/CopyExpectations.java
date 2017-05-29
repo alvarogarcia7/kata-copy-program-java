@@ -11,31 +11,31 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-class CopyExpectations {
+public class CopyExpectations {
     private String[] returnValues;
     private Writer to;
     private Reader from;
 
-    static CopyExpectations aNew() {
+    public static CopyExpectations aNew() {
         return new CopyExpectations();
     }
 
-    CopyExpectations readingFrom(Reader keyboardReader) {
+    public CopyExpectations readingFrom(Reader keyboardReader) {
         this.from = keyboardReader;
         return this;
     }
 
-    CopyExpectations returning(String[] returnValues) {
+    public CopyExpectations returning(String[] returnValues) {
         this.returnValues = returnValues;
         return this;
     }
 
-    CopyExpectations writingTo(Writer writer) {
+    public CopyExpectations writingTo(Writer writer) {
         this.to = writer;
         return this;
     }
 
-    Expectations build() {
+    public Expectations build() {
         return new Expectations() {
             {
                 setUpOrigin();
