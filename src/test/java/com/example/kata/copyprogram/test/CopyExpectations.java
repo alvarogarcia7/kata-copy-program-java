@@ -38,11 +38,14 @@ class CopyExpectations {
     Expectations build() {
         return new Expectations() {
             {
+                setUpOrigin();
+                setUpDestination();
+            }
+
+            private void setUpOrigin() {
                 setUpLoopControl();
 
                 setUpLoopValues();
-
-                setUpDestination();
             }
 
             private void setUpDestination() {
