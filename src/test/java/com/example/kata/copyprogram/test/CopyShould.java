@@ -44,18 +44,51 @@ public class CopyShould {
     }
 
     private Expectations CopyExpectations_aNew(String... returnValues) {
-        return new Expectations() {{
+        return CopyExpectations.aNew()
+                .readingFrom(keyboardReader)
+                .returning(returnValues)
+                .writingTo(writePrinter)
+                .build();
+    }
 
-            List<Action> collect1 = Arrays.stream(returnValues).map(x->returnValue(true)).collect(Collectors.toList());
-            collect1.add(returnValue(false));
-            exactly(returnValues.length+1).of(keyboardReader).hasNext();
-            will(onConsecutiveCalls(collect1.toArray(new Action[0])));
-            exactly(returnValues.length).of(keyboardReader).get();
-            Action[] collect = Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()).toArray(new Action[0]);
-            will(onConsecutiveCalls(collect
-            ));
+    private static class CopyExpectations {
+        private String[] returnValues;
+        private WritePrinter to;
+        private ReadKeyboard from;
 
-            Arrays.stream(returnValues).forEach(message -> oneOf(writePrinter).print(message));
-        }};
+        static CopyExpectations aNew() {
+            return new CopyExpectations();
+        }
+
+        CopyExpectations readingFrom(ReadKeyboard keyboardReader) {
+            this.from = keyboardReader;
+            return this;
+        }
+
+        CopyExpectations returning(String[] returnValues) {
+            this.returnValues = returnValues;
+            return this;
+        }
+
+        CopyExpectations writingTo(WritePrinter writePrinter) {
+            this.to = writePrinter;
+            return this;
+        }
+
+        Expectations build() {
+            return new Expectations() {{
+
+                List<Action> collect1 = Arrays.stream(returnValues).map(x->returnValue(true)).collect(Collectors.toList());
+                collect1.add(returnValue(false));
+                exactly(returnValues.length+1).of(from).hasNext();
+                will(onConsecutiveCalls(collect1.toArray(new Action[0])));
+                exactly(returnValues.length).of(from).get();
+                Action[] collect = Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()).toArray(new Action[0]);
+                will(onConsecutiveCalls(collect
+                ));
+
+                Arrays.stream(returnValues).forEach(message -> oneOf(to).print(message));
+            }};
+        }
     }
 }
