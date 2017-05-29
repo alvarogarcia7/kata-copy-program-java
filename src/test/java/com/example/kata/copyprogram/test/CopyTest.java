@@ -59,23 +59,18 @@ public class CopyTest {
     }
     @Test
     public void outputs_all_messages() {
-        context.checking(new Expectations() {{
-            exactly(3).of(keyboardReader).hasNext(); will(onConsecutiveCalls(
-                    returnValue(true),
-                    returnValue(true),
-                    returnValue(false)
-            ));
-            exactly(2).of(keyboardReader).get(); will(onConsecutiveCalls(
-                    returnValue("a"),
-                    returnValue("b")
-            ));
-
-            oneOf(writer).print("a");
-            oneOf(writer).print("b");
-        }});
+        context.checking(setUpReturning("a", "b"));
 
         sut.copy();
 
         context.assertIsSatisfied();
+    }
+
+    private Expectations setUpReturning(String... returnValues) {
+        return CopyExpectations.aNew()
+                .readingFrom(keyboardReader)
+                .returning(returnValues)
+                .writingTo(writer)
+                .build();
     }
 }
