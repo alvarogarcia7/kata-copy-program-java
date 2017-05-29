@@ -31,8 +31,13 @@ public class CopyShould {
     public void forward_messages_from_input_to_output() {
 
         context.checking(new Expectations() {{
-            oneOf(keyboardReader).hasNext(); will(returnEnumeration(true, true, false));
-            oneOf(keyboardReader).get(); will(returnEnumeration("a", "b"));
+            oneOf(keyboardReader).hasNext(); will(onConsecutiveCalls
+                    (returnValue(true),
+                    returnValue(true),
+                    returnValue(false)));
+            oneOf(keyboardReader).get(); will(onConsecutiveCalls(
+                    returnValue("a"),
+                    returnValue("b")));
 
             oneOf(writePrinter).print("a");
             oneOf(writePrinter).print("b");
