@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CopyShould {
@@ -44,10 +45,11 @@ public class CopyShould {
 
     private Expectations CopyExpectations_aNew(String... returnValues) {
         return new Expectations() {{
-            exactly(returnValues.length+1).of(keyboardReader).hasNext(); will(onConsecutiveCalls
-                    (returnValue(true),
-                    returnValue(true),
-                    returnValue(false)));
+
+            List<Action> collect1 = Arrays.stream(returnValues).map(x->returnValue(true)).collect(Collectors.toList());
+            collect1.add(returnValue(false));
+            exactly(returnValues.length+1).of(keyboardReader).hasNext();
+            will(onConsecutiveCalls(collect1.toArray(new Action[0])));
             exactly(returnValues.length).of(keyboardReader).get();
             Action[] collect = Arrays.stream(returnValues).map(AbstractExpectations::returnValue).collect(Collectors.toList()).toArray(new Action[0]);
             will(onConsecutiveCalls(collect
