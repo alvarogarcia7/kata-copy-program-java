@@ -10,12 +10,12 @@ import org.junit.Test;
 
 public class CopyTest {
 
-    private Writer output;
     private Mockery context;
-
+        
     private Copier sut;
 
     private Reader input;
+    private Writer output;
 
     @Before
     public void setUp() {
