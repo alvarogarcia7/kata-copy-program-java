@@ -3,7 +3,7 @@ package com.example.kata.copyprogram.test.unit;
 import com.example.kata.copyprogram.Copier;
 import com.example.kata.copyprogram.Reader;
 import com.example.kata.copyprogram.Writer;
-import com.example.kata.copyprogram.test.CopyExpectations;
+import com.example.kata.copyprogram.test.CopyExpectationsBuilder;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -58,7 +58,7 @@ public class CopyTest {
     }
 
     private Expectations setUpReturning(String... returnValues) {
-        return CopyExpectations.aNew()
+        return CopyExpectationsBuilder.aNew()
                 .readingFrom(input)
                 .returning(returnValues)
                 .writingTo(output)
